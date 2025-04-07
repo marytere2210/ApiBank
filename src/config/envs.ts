@@ -9,5 +9,7 @@ export const envs ={
     DATABASEHOST: get("DATABASEHOST").required().asString(),
     DATABASENAME: get("DATABASENAME").required().asString(),
     DATABASEPORT: get("DATABASEPORT").required().asPortNumber(),
+    SECRETKEY: get("SECRETKEY_JWT").required().asString(),
+    
 };
 console.log(`Usando el puerto:, ${envs.PORT}`);
