@@ -1,5 +1,9 @@
-import { BaseEntity, PrimaryGeneratedColumn, CreateDateColumn, Column, Entity, OneToMany } from "typeorm";
+import { BaseEntity, PrimaryGeneratedColumn, CreateDateColumn, Column, Entity } from "typeorm";
 
+export enum UserRole {
+ACTIVE = "active",
+INACTIVE = "inactive",
+}
 @Entity()
 export class User extends BaseEntity{
     @PrimaryGeneratedColumn("uuid")
@@ -14,8 +18,8 @@ export class User extends BaseEntity{
     @Column({type: "text", nullable: true })
     password_user: string;
 
-    @Column({type: "boolean", default: true})
-    status_user: boolean;
+    @Column({type: "enum", enum:UserRole, default: UserRole.INACTIVE})
+    status_user: UserRole;
 
     @CreateDateColumn()
     createdAt_user: Date;   

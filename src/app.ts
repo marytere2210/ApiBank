@@ -3,6 +3,8 @@ import { PostgresDatabase } from "./data/postgres/postgres_database";
 import { AppRoutes } from "./presentation/routes";
 import { Server } from "./presentation/server";
 
+
+
 async function main(){
  const postgres = new PostgresDatabase({
     username: envs.DATABASEUSERNAME,
