@@ -1,10 +1,17 @@
 import express,{ Router } from "express";
+import path from "path";
 
 
 interface ConfigServer{
     port:number,
     routes:Router;
 }
+
+const app = express();
+
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'pug');
+
 
 export class Server{
     private readonly app = express();

@@ -1,3 +1,6 @@
+import pug from 'pug';
+import path from 'path';
+
 import { envs } from "../../../config";
 import { encriptAdapter } from "../../../config/encriptpassword";
 import { GenerateToken } from "../../../config/generateToken";
@@ -5,8 +8,6 @@ import { User, UserRole } from "../../../data/postgres/models/user-models";
 import { RegisterUserDto } from "../../../domain/dto/user/register_User.dto";
 import { CustomError } from "../../../domain/errors/custom.error";
 import { EmailService } from "../../common/services/email.services";
-
-
 
 export class RegisterUserService{
 
@@ -59,6 +60,7 @@ export class RegisterUserService{
         
     }
   }
+ 
 
   private sendLinkValidateToken = async(email:string)=>{
     const token = await GenerateToken.generatetoken({email}, "300s");
@@ -70,11 +72,14 @@ export class RegisterUserService{
     console.log('webservice', envs.WEBSERVICE_URL);
     console.log("link", link);
 
-    const html =`
-    <h1> Validate Your Email! </h1>
-    <p>Click the link and verify your email</p>
-    <a href="${link}">Validate your email ${email}</a>
-   `;
+    const templatePath = path.join(__dirname, "../../views/emailtemplates.pug");
+   console.log(templatePath);
+
+
+    const html = pug.renderFile(templatePath, { link, email });
+    console.log("Generated HTML:", html);
+    if (!html) throw CustomError.internalServer("Error generating email template");
+    
    const isSent = await this.emailService.sendEmail({
     to: email,
     subject: 'Validate your email',
