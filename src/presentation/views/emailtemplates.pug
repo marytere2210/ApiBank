@@ -1,50 +1,76 @@
 doctype html
-html
-  head
-    title Email Validation
-    style.
-      body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      text-align: center;
-      background-color: #131c44;
-      }
-      .banner {
-      width: 100%;
-      height: 200px;
-      background-image: url('./Banco Digital azul.png');
-      background-size: cover;
-      background-position: center;
-      }
-      h1,h2 {
-      color: white;
-      margin-top: 20px;
-      }
-      p {
-      color: #ffffff;
-      }
-      a {
-      display: inline-block;
-      padding: 10px 20px;
-      background-color: #007BFF;
-      color: white;
-      text-decoration: none;
-      border-radius: 5px;
-      margin-top: 10px;
-      }
-      a:hover {
-      background-color: #0056b3;
-      }
-  body
-    .banner
-    h1 Estimado cliente
-    p
-      | Para garantizar la seguridad de su cuenta, le solicitamos que verifique su direcci&oacute;n de correo electr&oacute;nico.
-    p
-      | Por favor, haga clic en el siguiente enlace para completar el proceso de validaci&oacute;n:
-   a(href=link) Validar correo
-    p Si no ha solicitado esta verificaci&oacute;n, puede ignorar este mensaje
-    p Atentamente,
-    p Equipo de Atenci&oacute;n al Cliente
-    h2 Banco Digital
+head
+  meta(charset='UTF-8')
+  meta(name='viewport' content='width=device-width, initial-scale=1.0')
+  title Banco Digital - Verificaci&oacute;n de Correo Electr&oacute;nico
+  style.
+    body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    color: #1d2a5b;
+    }
+    .header {
+    background-image: #1d2a5b;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    }
+    .container {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    h1, h2 {
+    color: #1d2a5b;
+    text-align: center;
+    }
+    p {
+    font-size: 16px;
+    line-height: 1.6;
+    margin: 10px 0;
+    }
+    a {
+    display: inline-block;
+    padding: 12px 25px;
+    background-color: #007BFF;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 16px;
+    margin-top: 15px;
+    font-weight: bold;
+    }
+    a:hover {
+    background-color: #0056b3;
+    }
+    .footer {
+    background-color: #1d2a5b;
+    color: white;
+    padding: 10px;
+    text-align: center;
+    font-size: 14px;
+    }
+.header
+  h1 Banco Digital
+  p Verificaci&oacute;n de Correo Electr&oacute;nico
+.container
+  h1 Estimado Cliente
+  p
+    | Para garantizar la seguridad de su cuenta, le solicitamos que verifique su direcci&oacute;n de correo electr&oacute;nico.
+  p Haga clic en el siguiente enlace para completar el proceso de validaci&oacute;n:
+  a(href= "#{link}") Validar Correo
+  p Si no ha solicitado esta verificaci&oacute;n, puede ignorar este mensaje.
+  p Atentamente,
+  p
+    strong Equipo de Atenci&oacute;n al Cliente
+  h2 Banco Digital
+.footer
+  
+  p &copy; 2023 Banco Digital. Todos los derechos reservados.
+  p Banco Digital - Confiamos en ti
+    

@@ -4,6 +4,7 @@ import { RegisterUserService } from "./services/register-user-service";
 import { EmailService } from "../common/services/email.services";
 import { envs } from "../../config";
 import { UserRole } from "../../data/postgres/models/user-models";
+import { LoginUserService } from "./services/login-user-service";
 
 
 export class UserRoutes{
@@ -16,14 +17,19 @@ export class UserRoutes{
             envs.SENDMAIL
         );
         const registerUserService = new RegisterUserService(emailService);
+        const loginUserService = new LoginUserService();
 
         const controller = new ControllerUser(
-            registerUserService
+            registerUserService,
+            loginUserService
         );
 
         router.post("/auth/register", controller.register.bind(controller));
 
         router.get("/validate/:token", controller.validate);
+        
+        router.post("/login",controller.login);
+
         return router;
     }
 

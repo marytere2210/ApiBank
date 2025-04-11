@@ -1,25 +1,25 @@
 import { NextFunction, Request, Response } from "express";
-import { JwtAdapter } from "../../../config";
-import { RoleUser, TypeUsers } from "../../../data";
+import { GenerateTokenforUser } from "../../../config/generateTokenUser";
+import { User, UserRole } from "../../../data/postgres/models/user-models";
 
 
 
 export class AuthMiddlewers{
 
     static async  protect(req: Request, res: Response, next: NextFunction){
-        // obtener el token
+        
         const token = req.cookies.token;
         console.log("TOKEN RECIBIDO:", token);
 
         if (!token) return res.status(401).json({ message: 'No token provided ' });
 
         try {
-            const payload = (await JwtAdapter.verifyToken(token)) as { id: string };
-           // if (!payload) return res.status(401)
-                const user = await TypeUsers.findOne({
+            const payload = (await GenerateTokenforUser.verifytoken(token)) as { id: string };
+        
+                const user = await User.findOne({
                     where: {
-                        id: payload.id,
-                        status: true,
+                        id_user: payload.id,
+                        status_user: UserRole.ACTIVE,
                     },
                 });
                 if (!user) return res.status(401).json({ message: 'Invalid token.' });
@@ -31,12 +31,9 @@ export class AuthMiddlewers{
             console.error(error);
       return res.status(500).json({ message: 'internal server error...' });
         }
-
-       
-
     };
 
-    static restricTo = (...roles: RoleUser[])=>{
+    static restricTo = (...roles: UserRole[])=>{
         return (req:Request, res:Response, next:NextFunction)=>{
 
          if(!roles.includes(req.body.sessionUser.rol)){

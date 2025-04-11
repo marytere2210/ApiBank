@@ -2,12 +2,16 @@ import { Request, Response } from "express";
 import { RegisterUserDto } from "../../domain/dto/user/register_User.dto";
 import { CustomError } from "../../domain/errors/custom.error";
 import { RegisterUserService } from "./services/register-user-service";
+import { LoginUserdto } from "../../domain/dto/user/loginUserdto";
 import { envs } from "../../config";
+import { LoginUserService } from "./services/login-user-service";
+
 
 
 export class ControllerUser{
     constructor (
-        private readonly registerUser: RegisterUserService,    
+        private readonly registerUser: RegisterUserService,
+        private readonly loginUser: LoginUserService,    
     ){}
 
     private handleError = (error: unknown, res: Response) => {
@@ -37,5 +41,20 @@ export class ControllerUser{
     .catch((error) => this.handleError(error, res))
   };
 
+  login = (req: Request, res: Response) => {
+    const [error, loginUserDto] = LoginUserdto.execute(req.body);
+    this.loginUser
+      .execute(loginUserDto!)
+      .then((data) => {
+        res.cookie('token', data.token, {
+          httpOnly: true,
+          secure: envs.NODE_ENV === 'production',
+          sameSite: 'strict',
+          maxAge: 3 * 60 * 60 * 1000,
+        });
 
+        return res.status(200).json({ user: data.user });
+      })
+      .catch((error) => this.handleError(error, res));
+  };
 }

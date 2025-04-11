@@ -4,6 +4,7 @@ export enum UserRole {
 ACTIVE = "active",
 INACTIVE = "inactive",
 }
+
 @Entity()
 export class User extends BaseEntity{
     @PrimaryGeneratedColumn("uuid")

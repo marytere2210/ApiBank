@@ -3,7 +3,7 @@ import { envs } from './envs';
 import { CustomError } from '../domain/errors/custom.error';
 
 
-export class GenerateToken {
+export class GenerateTokenforUser {
     static async generatetoken (payload:any, duration: string = "3h"){
         return new Promise((resolve)=>{
             jwt.sign(payload, envs.SECRETKEY, {expiresIn: duration},(error, token)=>{

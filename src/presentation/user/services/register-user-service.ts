@@ -1,9 +1,8 @@
 import pug from 'pug';
 import path from 'path';
-
 import { envs } from "../../../config";
 import { encriptAdapter } from "../../../config/encriptpassword";
-import { GenerateToken } from "../../../config/generateToken";
+import { GenerateTokenforUser } from "../../../config/generateTokenUser";
 import { User, UserRole } from "../../../data/postgres/models/user-models";
 import { RegisterUserDto } from "../../../domain/dto/user/register_User.dto";
 import { CustomError } from "../../../domain/errors/custom.error";
@@ -21,7 +20,7 @@ export class RegisterUserService{
         user.status_user = UserRole.INACTIVE;
         user.password_user = this.encriptPassword(userData.password);
 
-        const userExist = await this.findeOneEmail(userData.email);
+        const userExist = await this.findOneuserEmail(userData.email);
         if(userExist) throw CustomError.badRequest("User already exists");
         
 
@@ -36,19 +35,19 @@ export class RegisterUserService{
         }
     }
 
- private findeOneEmail =  async(email:string)=>{
+ private findOneuserEmail =  async(email:string)=>{
     const users = await User.findOne({where: {email_user: email}});
     return users;
   };
 
   public validateEmail = async (token:string)=>{
-    const payload = await GenerateToken.verifytoken(token);
+    const payload = await GenerateTokenforUser.verifytoken(token);
     if(!payload) throw CustomError.unAuthorized("Invalid token");
     
     const {email} = payload as {email:string};
     if(!email) throw CustomError.notFound("Invalid token");
     
-    const user = await this.findeOneEmail(email);
+    const user = await this.findOneuserEmail(email);
     if(!user)  throw CustomError.notFound("User not found");
     
     user.status_user = UserRole.ACTIVE;
@@ -60,23 +59,18 @@ export class RegisterUserService{
         
     }
   }
- 
 
   private sendLinkValidateToken = async(email:string)=>{
-    const token = await GenerateToken.generatetoken({email}, "300s");
+    const token = await GenerateTokenforUser.generatetoken({email}, "300s");
     console.log("generate Token", token);
     if(!token) throw CustomError.internalServer("Error generating token");
     
-
     const link = `http://${envs.WEBSERVICE_URL}/api/validate/${token}`;
-    console.log('webservice', envs.WEBSERVICE_URL);
-    console.log("link", link);
 
     const templatePath = path.join(__dirname, "../../views/emailtemplates.pug");
-   console.log(templatePath);
+   //console.log(templatePath);
 
-
-    const html = pug.renderFile(templatePath, { link, email });
+   const html = pug.renderFile(templatePath, { link, email });
     console.log("Generated HTML:", html);
     if (!html) throw CustomError.internalServer("Error generating email template");
     

@@ -15,6 +15,6 @@ export const envs ={
     MAILER_EMAIL: get("MAILER_EMAIL").required().asString(),
     MAILER_SECRET_KEY: get("MAILER_SECRET_KEY").required().asString(),
     SENDMAIL: get("SENDMAIL").required().asBool(),
-    
+    EXPIREINJWT: get("EXPIRE_IN_JWT").required().asString(), 
 };
 console.log(`Usando el puerto:, ${envs.PORT}`);
