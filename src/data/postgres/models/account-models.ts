@@ -1,4 +1,6 @@
-import { BaseEntity, PrimaryGeneratedColumn, CreateDateColumn, Column, Entity, BeforeInsert } from "typeorm";
+import { BaseEntity, PrimaryGeneratedColumn, CreateDateColumn, Column, Entity, BeforeInsert, ManyToMany, ManyToOne, OneToMany } from "typeorm";
+import { User } from "./user-models";
+import { Transaction } from "./transaction-models";
 
 export enum AccountType {
     CHECKING = "checking",
@@ -24,12 +26,18 @@ export class Account extends BaseEntity{
     @Column({type:"numeric", precision: 10, scale: 2})
     balance_account: number;
 
-    @Column({type: "varchar", length:50, unique: true })
-    type_account: string;
-
     @Column({type: "enum", enum: AccountType, default: AccountType.SAVINGS})
+    type_account: AccountType;
+
+    @Column({type: "boolean", default: true})
     status_account: boolean;
 
     @CreateDateColumn()
     createdAt_account: Date;
+
+   @ManyToOne (()=> User, (user) => user.accounts) user: User; 
+
+   @OneToMany(()=> Transaction, (transaction) => transaction.account)
+   transactions: Transaction[];
+   
 }

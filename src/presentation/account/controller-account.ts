@@ -1,11 +1,10 @@
 import { Request, Response } from "express";
-import { RegisterUserDto } from "../../domain/dto/user/register_User.dto";
 import { CheckAllAccountService } from "./services/check_accounts.service";
 import { CheckOneAccountService } from "./services/check_one_account.service";
 import { DeleteAccountService } from "./services/delete_account.service";
 import { RegisterAccountService } from "./services/register_account.services";
-
-
+import { RegisterAccountDto } from "../../domain/dto/account/registeraccountdto";
+import { CustomError } from "../../domain/errors/custom.error";
 
 export class ControllerAccount {
   constructor(
@@ -15,46 +14,54 @@ export class ControllerAccount {
     private readonly deleteAccount: DeleteAccountService,
   ) {}
 
-  handleError = (error: Error, res: Response) => {
-    if (error instanceof Error) {
-      return res.status(500).json({ message: error.message });
+  private handleError = (error: unknown, res: Response) => {
+    if(error instanceof CustomError){
+      return res.status(error.statusCode).json({message: error.message});
     }
-    return res.status(500).json({ message: "Internal Server Error" });
+
+    return res.status(500).json({message: 'Internal Server Error'});
   };
-
-
-
+    
 register_account = (req: Request, res: Response)=> {
-    const [error, registerUserDto] = RegisterUserDto.execute(req.body);
-    if(error){
-      return res.status(422).json({message: error})
-        }
+    const { userId } = req.params;
+    const { balance_account, type_account } = req.body;
+
+    const [error, registerAccountDto] = RegisterAccountDto.execute({
+      balance_account,
+      type_account,
+    });
+
+    if (error) {
+      return res.status(400).json({ message: error });
+    }
+
     this.registeraccountService
-        .execute(registerUserDto!)
-    .then((message) => res.status(201).json(message))
-      .catch((err) => this.handleError(err, res));
+      .execute(registerAccountDto!, userId)
+      .then((response) => res.status(201).json(response))
+      .catch((error) => this.handleError(error, res));
+  }
+
+  check_all_accounts = (req: Request, res: Response) => {
+    const { user } = req.params;
+    this.checkAllAccountsServices
+      .execute(user)
+      .then((response) => res.status(200).json(response))
+      .catch((error) => this.handleError(error, res));
   };
 
-  checkAll = (req: Request, res: Response)=> {
-    this.checkAllAccountsServices
-    .execute()
-    .then((data) => res.status(201).json(data))
-    .catch((error) => this.handleError(error, res))
-  };
-  checkOne = (req: Request, res: Response)=> {
-    const {id} = req.params;
-    
+  check_one_account = (req: Request, res: Response) => {
+    const { account_number } = req.params;
     this.checkAccountServices
-    .execute(id)
-    .then((data) => res.status(201).json(data))
-    .catch((error) => this.handleError(error, res))
+      .execute(account_number)
+      .then((response) => res.status(200).json(response))
+      .catch((error) => this.handleError(error, res));
   };
-  delete = (req: Request, res: Response)=> {
-    const {id} = req.params;
-    
+
+  delete_account = (req: Request, res: Response) => {
+    const { account_number } = req.params;
     this.deleteAccount
-    .execute(id)
-    .then((data) => res.status(204).json(data))
-    .catch((error) => this.handleError(error, res))
-  };
+      .deleteAccount(account_number)
+      .then((response) => res.status(200).json(response))
+      .catch((error) => this.handleError(error, res));
+  }
 }

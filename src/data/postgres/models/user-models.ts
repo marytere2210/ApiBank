@@ -1,4 +1,5 @@
-import { BaseEntity, PrimaryGeneratedColumn, CreateDateColumn, Column, Entity } from "typeorm";
+import { BaseEntity, PrimaryGeneratedColumn, CreateDateColumn, Column, Entity, OneToMany } from "typeorm";
+import { Account } from "./account-models";
 
 export enum UserRole {
 ACTIVE = "active",
@@ -24,4 +25,8 @@ export class User extends BaseEntity{
 
     @CreateDateColumn()
     createdAt_user: Date;   
+    
+
+    @OneToMany(()=> Account, (account) => account.user) accounts: Account[]; // Relación uno a muchos con la entidad Account
+    
 }
