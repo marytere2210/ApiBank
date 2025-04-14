@@ -23,7 +23,7 @@ export class ControllerAccount {
   };
     
 register_account = (req: Request, res: Response)=> {
-    const { userId } = req.params;
+  
     const { balance_account, type_account } = req.body;
 
     const [error, registerAccountDto] = RegisterAccountDto.execute({
@@ -36,10 +36,10 @@ register_account = (req: Request, res: Response)=> {
     }
 
     this.registeraccountService
-      .execute(registerAccountDto!, userId)
+      .execute(registerAccountDto!, req)
       .then((response) => res.status(201).json(response))
       .catch((error) => this.handleError(error, res));
-  }
+  };
 
   check_all_accounts = (req: Request, res: Response) => {
     const { user } = req.params;

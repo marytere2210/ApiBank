@@ -20,6 +20,6 @@ const server = new Server({
     port: envs.PORT,
     routes: AppRoutes.routes
 });
- await server.star();
+ await server.start();
 } 
 main();

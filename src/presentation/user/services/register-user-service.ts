@@ -66,12 +66,13 @@ export class RegisterUserService{
     if(!token) throw CustomError.internalServer("Error generating token");
     
     const link = `http://${envs.WEBSERVICE_URL}/api/validate/${token}`;
+    console.log("link", link);
 
     const templatePath = path.join(__dirname, "../../views/emailtemplates.pug");
    //console.log(templatePath);
 
    const html = pug.renderFile(templatePath, { link, email });
-    console.log("Generated HTML:", html);
+    //console.log("Generated HTML:", html);
     if (!html) throw CustomError.internalServer("Error generating email template");
     
    const isSent = await this.emailService.sendEmail({

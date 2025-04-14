@@ -1,3 +1,4 @@
+import cookieParser from "cookie-parser";
 import express,{ Router } from "express";
 import path from "path";
 
@@ -21,10 +22,11 @@ export class Server{
     constructor(confserver:ConfigServer){
         this.port = confserver.port;
         this.routes = confserver.routes;
+        this.app.use(express.json());
     }
 
-    async star(){
-        this.app.use(express.json());
+    async start(){
+        this.app.use(cookieParser());
         this.app.use(express.urlencoded({extended:true}));
         this.app.use(this.routes);
         this.app.listen(this.port, () => {

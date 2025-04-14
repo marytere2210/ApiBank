@@ -57,4 +57,17 @@ export class ControllerUser{
       })
       .catch((error) => this.handleError(error, res));
   };
+  findermeuser = (req: Request, res: Response) => {
+    const userId = req.body.sessionUser;
+    if (!userId) {
+      return res.status(401).json({ message: "User not logged in" });
+    }
+    this.registerUser
+      .execute(userId)
+      .then((user) => res.status(200).json(user))
+      .catch((error) => this.handleError(error, res));
+  };
+
+ 
+  
 }
