@@ -5,6 +5,7 @@ export class CustomError extends Error {
         public readonly errorCode: string,
     ) {
         super(message);
+        Object.setPrototypeOf(this, CustomError.prototype); // 🔥 Esto es crucial
     }
 
     static badRequest(message: string)

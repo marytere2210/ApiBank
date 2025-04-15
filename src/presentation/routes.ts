@@ -14,10 +14,7 @@ export class AppRoutes{
      router.use('/api/transactions', RoutesTransaction.routes);
      router.use('/api/accounts', AccountRoutes.routes);
      
-
-
         return router;
-        
 
     }
 }

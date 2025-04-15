@@ -1,76 +1,82 @@
-doctype html
-head
-  meta(charset='UTF-8')
-  meta(name='viewport' content='width=device-width, initial-scale=1.0')
-  title Banco Digital - Verificaci&oacute;n de Correo Electr&oacute;nico
-  style.
-    body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f4f4f4;
-    color: #1d2a5b;
-    }
-    .header {
-    background-image: #1d2a5b;
-    color: white;
-    padding: 20px;
-    text-align: center;
-    }
-    .container {
-    max-width: 600px;
-    margin: 20px auto;
-    padding: 20px;
-    background-color: white;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    }
-    h1, h2 {
-    color: #1d2a5b;
-    text-align: center;
-    }
-    p {
-    font-size: 16px;
-    line-height: 1.6;
-    margin: 10px 0;
-    }
-    a {
-    display: inline-block;
-    padding: 12px 25px;
-    background-color: #007BFF;
-    color: white;
-    text-decoration: none;
-    border-radius: 5px;
-    font-size: 16px;
-    margin-top: 15px;
-    font-weight: bold;
-    }
-    a:hover {
-    background-color: #0056b3;
-    }
-    .footer {
-    background-color: #1d2a5b;
-    color: white;
-    padding: 10px;
-    text-align: center;
-    font-size: 14px;
-    }
-.header
-  h1 Banco Digital
-  p Verificaci&oacute;n de Correo Electr&oacute;nico
-.container
-  h1 Estimado Cliente
-  p
-    | Para garantizar la seguridad de su cuenta, le solicitamos que verifique su direcci&oacute;n de correo electr&oacute;nico.
-  p Haga clic en el siguiente enlace para completar el proceso de validaci&oacute;n:
-  a(href= "#{link}") Validar Correo
-  p Si no ha solicitado esta verificaci&oacute;n, puede ignorar este mensaje.
-  p Atentamente,
-  p
-    strong Equipo de Atenci&oacute;n al Cliente
-  h2 Banco Digital
-.footer
-  
-  p &copy; 2023 Banco Digital. Todos los derechos reservados.
-  p Banco Digital - Confiamos en ti
-    
+html
+  head
+    meta(charset='UTF-8')
+    meta(name='viewport' content='width=device-width, initial-scale=1.0')
+    title Banco Digital - Verificación de Correo Electrónico
+    link(href='https://fonts.googleapis.com/css2?family=Roboto&display=swap', rel='stylesheet')
+    style.
+      body {
+        font-family: 'Roboto', sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f4;
+        color: #1d2a5b;
+      }
+      .header {
+        background-image: url('https://i.postimg.cc/dQfLRvgz/Banco-Digitalazul.png');
+        background-size: cover;
+        background-position: center;
+        height: 150px;
+        color: white;
+        padding: 20px;
+        text-align: center;
+      }
+      .container {
+        max-width: 600px;
+        margin: 20px auto;
+        padding: 20px;
+        background-color: white;
+        border: 1px solid #ddd; 
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+      h1, h2 {
+        color: #1d2a5b;
+        text-align: center;
+      }
+      p {
+        font-size: 16px;
+        line-height: 1.6;
+        margin: 10px 0;
+      }
+      a {
+        display: inline-block;
+        padding: 12px 25px;
+        background-color: #fff;
+        color: #007BFF;
+        border: 1px solid #007BFF;
+        text-decoration: none;
+        border-radius: 5px;
+        font-size: 16px;
+        margin-top: 15px;
+        font-weight: bold;
+      }
+      a:hover {
+        background-color: #1d2a5b;
+        color:rgb(255, 255, 255);
+        border: 1px solidrgb(255, 255, 255);
+      }
+      .footer {
+        background-color: #1d2a5b;
+        color: white;
+        padding: 10px;
+        text-align: center;
+        font-size: 14px;
+      }
+
+  body
+    .header
+     
+    .container
+      h1 Estimado Cliente
+      p Para garantizar la seguridad de su cuenta, le solicitamos que verifique su dirección de correo electrónico.
+      p Haga clic en el siguiente enlace para completar el proceso de validación:
+      a(href=link) Validar Correo
+      p Si no ha solicitado esta verificación, puede ignorar este mensaje.
+      p Atentamente,
+      p
+        strong Equipo de Atención al Cliente
+      h2 Banco Digital
+    .footer
+      p &copy; 2023 Banco Digital. Todos los derechos reservados.
+      p Banco Digital - Confiamos en ti

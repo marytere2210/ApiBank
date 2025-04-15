@@ -21,15 +21,42 @@ export class ControllerTransaction {
         return res.status(500).json({message: 'Internal Server Error'});
     };
 
-    register_transaction = (req: Request, res: Response) => {
-        const { id_account } = req.params;
-        const { type_transaction, amount_transaction } = req.body;
+    /**register_transaction = (req: Request, res: Response) => {
+        //const { account_number } = req.body;
+        const { type_transaction, amount, account_number } = req.body;
 
        const [error, registerTransactionDto] = RegisterTransactionDto.execute({
         type_transaction,
-        amount_transaction,
-        account_id: id_account,
+        amount,
+        account_number,
        })
+
+       if(error){
+        console.log('validacion de error:', error)
+        return res.status(422).json({message: error})
+       }
+
+        this.registerTransactionService
+            .execute(registerTransactionDto!)
+            .then((response) => res.status(201).json(response))
+            .catch((error) => this.handleError(error, res));
+            console.log('servicio error:', error);
+            
+    };*/
+
+    
+    register_transaction = (req: Request, res: Response) => {
+        console.log("req.body:", req.body);
+        const { account_id } = req.body;
+        console.log("id_account:", account_id);
+        const { type_transaction, amount_transaction } = req.body;
+        console.log("type_transaction:", type_transaction);
+       const [error, registerTransactionDto] = RegisterTransactionDto.execute({
+        type_transaction,
+        amount_transaction,
+        account_id: account_id,
+       })
+
 
        if(error){
         return res.status(422).json({message: error})
@@ -40,6 +67,8 @@ export class ControllerTransaction {
             .then((response) => res.status(201).json(response))
             .catch((error) => this.handleError(error, res));
     };
+
+    
     check_one_transaction = (req: Request, res: Response) => {
         const {  id_transaction } = req.params;
         this.checkTransactionService

@@ -3,6 +3,7 @@ import { ControllerTransaction } from "./controller-transaction";
 import { CheckTransactionService } from "./services/check-Onetransaction.service";
 import { RegisterTransactionService } from "./services/register-transaction.sercive";
 import { CheckAllTransactionService } from "./services/check-Alltransaction.service";
+import { AuthMiddlewers } from "../common/middlewers/auth.middlewers";
 
 
 
@@ -19,9 +20,9 @@ export class RoutesTransaction {
       checkAllTransactionsService
     );
 
-    router.post("/", controller.register_transaction.bind(controller));
-    router.get("/check_transaction/:id_transaction", controller.check_one_transaction.bind(controller));
-    router.get("/check_all_transaction/:userId", controller.check_all_transaction.bind(controller));
+    router.post("/", AuthMiddlewers.protect, controller.register_transaction.bind(controller));
+    router.get("/check_transaction/:id_transaction",AuthMiddlewers.protect, controller.check_one_transaction.bind(controller));
+    router.get("/check_all_transaction/:userId", AuthMiddlewers.protect,controller.check_all_transaction.bind(controller));
 
     return router;
   }

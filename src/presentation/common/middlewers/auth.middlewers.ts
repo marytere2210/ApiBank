@@ -14,7 +14,7 @@ export class AuthMiddlewers{
 
     static async  protect(req: Request, res: Response, next: NextFunction){
         
-        const token = req.params.token//req.cookies?.token;
+        const token = req.cookies?.token;
         console.log("TOKEN RECIBIDO:", token);
 
         if (!token) return res.status(401).json({ message: 'No token PROVIDED' });
@@ -23,7 +23,7 @@ export class AuthMiddlewers{
             const payload = (await GenerateTokenforUser.verifytoken(token)) as { id: string };
 
             if(!payload) return res.status(401).json({ message: 'Invalid token.' });
-            console.log("PAYLOAD:", payload);
+          //  console.log("PAYLOAD:", payload);
         
                 const user = await User.findOne({
                     where: {

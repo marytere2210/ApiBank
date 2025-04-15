@@ -30,7 +30,7 @@ export class UserRoutes{
         
         router.post("/auth/login",controller.login.bind(controller));
 
-        router.get("/users/me",controller.findermeuser.bind(controller))
+        router.get("/users/me/:id",controller.findermeuser.bind(controller))
 
         return router;
     }
