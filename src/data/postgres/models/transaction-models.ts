@@ -10,10 +10,10 @@ export class Transaction extends BaseEntity{
     @PrimaryGeneratedColumn("uuid")
     id_transaction: string;
 
-    @Column("uuid")
+    @Column("uuid",{nullable:true})
    ref_send_transaction: string;
 
-   @Column("uuid")
+   @Column("uuid",{nullable:true})
    ref_resp_transaction: string;
 
    @Column ({type: "enum", enum: TransactionsType})

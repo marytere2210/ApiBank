@@ -2,7 +2,7 @@ export class RegisterTransactionDto{
 
     constructor(
         public readonly amount_transaction: number,
-        public readonly type_transaction: string,
+        public readonly type_transaction: "income" | "outcome",
         public readonly account_id : string,
     ){}
 
@@ -10,7 +10,7 @@ export class RegisterTransactionDto{
         const { amount_transaction, type_transaction, account_id } = data;
 
         console.log('data', data);
-        if (typeof amount_transaction !== 'number' || typeof type_transaction !== 'string'
+        if (typeof amount_transaction !== 'number' || type_transaction !== 'income' && type_transaction !== 'outcome'
             || typeof account_id  !== 'string') {
             return ['Invalid data', null];
         }
